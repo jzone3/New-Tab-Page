@@ -1,0 +1,71 @@
+/*html, body {
+	border: 0;
+	margin: 0;
+	padding: 0;
+}
+*/
+#searchbox
+{
+	background: #eaf8fc;
+	background-image: -moz-linear-gradient(#fff, #d4e8ec);
+	background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0, #d4e8ec),color-stop(1, #fff));
+	/*background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0, #d4e8ec),color-stop(1, #fff));*/
+	
+	-moz-border-radius: 20px;
+	border-radius: 20px;
+
+	box-shadow: 0 0 20px 8px rgba(0, 0, 0, 0.5);
+	
+	border-width: 1px;
+	border-style: solid;
+	border-color: #c4d9df #a4c3ca #83afb7;
+	width: 600px;
+	height: 65px;
+	padding: 10px;
+	margin: 100px auto auto;
+	overflow: hidden; /* Clear floats */
+}
+
+
+#search, #submit
+{
+	float: left;
+}
+
+#search
+{
+	padding: 5px 9px 5px 16px;
+	height: 54px;
+	width: 573px;
+
+	/*border: 1px solid #a4c3ca;*/
+	font: normal 37px 'Share Tech', sans-serif;
+	/*'trebuchet MS', arial, helvetica*/
+	color: #ADADAD;
+
+	/*background: #f1f1f1;*/
+	background: #363636;
+	
+	-moz-border-radius: 20px;
+	 border-radius: 20px;
+	 -moz-box-shadow:  0 0 20px 8px rgba(0, 0, 0, 0.5) inset;
+	 -webkit-box-shadow:  0 0 20px 8px rgba(0, 0, 0, 0.5) inset;
+	 /*box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25) inset, 0 1px 0 rgba(255, 255, 255, 1);*/
+	 box-shadow: 0 0 20px 8px rgba(0, 0, 0, 0.5) inset;
+}
+
+input::-webkit-input-placeholder {
+	padding-left: 0px;
+	font: normal 37px 'Share Tech', sans-serif;
+	color: #858585;
+}
+
+input:-moz-placeholder {
+	padding-left: 0px;
+	font: normal 37px 'Share Tech', sans-serif;
+	color: #858585;
+}
+
+input#search:focus {
+	outline-width: 0;
+}

@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="search.css" />
+	<link href='http://fonts.googleapis.com/css?family=Share+Tech' rel='stylesheet' type='text/css'>
+	<title>Search</title>
+</head>
+<body background="woodbg.png">
+	<form id="searchbox">
+		<input id="search" class="noEnterSubmit" type="text" placeholder="Type here" autocomplete="off">
+		<!-- <input id="submit" type="submit" value="Search"> -->
+	</form>
+
+
+	<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+	<script type="text/javascript">
+		$('.noEnterSubmit').keypress(function(e){
+			if ( e.which == 13 ) e.preventDefault();
+		});
+	</script>
+</body>
+</html>
