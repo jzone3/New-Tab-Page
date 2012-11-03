@@ -16,7 +16,7 @@
 	</form>
 
 	<div id="results" style="display: none;">
-		
+		<div id="actualResults"></div>
 	</div>
 
 	<script type="text/javascript">
@@ -25,11 +25,11 @@
 		$('.noEnterSubmit').keypress(function(e){
 			if ( e.which == 13 ) {
 				if (!shown) {
-					$('#results').show()
+					$('#results').show();
 					$('#results').animate({
 						height: "360px",
 						padding: "20px 20px",
-					}, 2000);
+					}, 'slow');
 					shown = true;
 				}
 
@@ -39,21 +39,22 @@
 					dataType: 'script',
 					data: {
 						q: $('#search')[0].value,
-						o: "json",
-						format: "json",
-						pretty: "1"
+						// o: "json",
+						format: 'json',
+						no_redirect: "1"
 					},
 					success: function(response) {
 						var responseData = jQuery.parseJSON(jQuery.trim(response));
-						$('#results').html('<h1>' + responseData["Heading"] + '</h1><br/>' + responseData["Abstract"]);
+						// var responseData = JSON.parse(jQuery.trim(response));
+						$('#actualResults').fadeOut('fast');
+						$('#actualResults').html('<h1>' + responseData.Heading + '</h1><br/>' + responseData.Abstract);
+						$('#actualResults').fadeIn('slow');
 					}
 				})
 
 				e.preventDefault();
 			}
 		});
-
-		// http://api.duckduckgo.com/?q=simpsons+characters&format=json&pretty=1
 	</script>
 </body>
 </html>
