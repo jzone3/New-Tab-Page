@@ -34,7 +34,7 @@
 				}
 
 				$.ajax({
-					type:'POST',
+					type:'GET',
 					url:'http://api.duckduckgo.com/',
 					dataType: 'script',
 					data: {
@@ -44,9 +44,9 @@
 						no_redirect: "1"
 					},
 					success: function(response) {
-						alert(response);
-						// var responseData = jQuery.parseJSON(response);
-						var responseData = JSON.parse(response);
+						alert(String(response));
+						var responseData = jQuery.parseJSON(response);
+						// var responseData = JSON.parse(response);
 						$('#actualResults').fadeOut('fast');
 						$('#actualResults').html('<h1>' + responseData.Heading + '</h1><br/>' + responseData.Abstract);
 						$('#actualResults').fadeIn('slow');
