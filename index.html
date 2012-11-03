@@ -24,19 +24,10 @@
 
 		$('.noEnterSubmit').keypress(function(e){
 			if ( e.which == 13 ) {
-				if (!shown) {
-					$('#results').show();
-					$('#results').animate({
-						height: "360px",
-						padding: "20px 20px",
-					}, 'slow');
-					shown = true;
-				}
-
 				$.ajax({
 					type:'GET',
 					url:'http://api.duckduckgo.com/',
-					dataType: 'script',
+					dataType: 'json',
 					data: {
 						q: $('#search')[0].value,
 						// o: "json",
@@ -47,9 +38,19 @@
 						alert(response);
 						var responseData = jQuery.parseJSON(response);
 						// var responseData = JSON.parse(response);
-						$('#actualResults').fadeOut('fast');
-						$('#actualResults').html('<h1>' + responseData.Heading + '</h1><br/>' + responseData.Abstract);
-						$('#actualResults').fadeIn('slow');
+						if (!shown) {
+							$('#results').show();
+							$('#results').animate({
+								height: "360px",
+								padding: "20px 20px",
+							}, 'slow');
+							shown = true;
+						}
+						else {
+							$('#actualResults').fadeOut('fast');
+							$('#actualResults').html('<h1>' + responseData.Heading + '</h1><br/>' + responseData.Abstract);
+							$('#actualResults').fadeIn('slow');
+						}
 					}
 				});
 
