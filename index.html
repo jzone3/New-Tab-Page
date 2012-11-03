@@ -44,7 +44,7 @@
 						no_redirect: "1"
 					},
 					success: function(response) {
-						var responseData = jQuery.parseJSON(jQuery.trim(response));
+						var responseData = jQuery.parseJSON(response);
 						// var responseData = JSON.parse(jQuery.trim(response));
 						$('#actualResults').fadeOut('fast');
 						$('#actualResults').html('<h1>' + responseData.Heading + '</h1><br/>' + responseData.Abstract);
