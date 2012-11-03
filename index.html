@@ -27,18 +27,16 @@
 				$.ajax({
 					type:'GET',
 					url:'http://api.duckduckgo.com/',
-					dataType: 'json',
+					dataType: 'jsonp',
+					crossDomain: true,
 					data: {
 						q: $('#search')[0].value,
 						// o: "json",
-						format: 'json',
-						no_redirect: "1"
+						format: 'json'
 					},
 					success: function(response) {
-						alert(response);
-						var responseData = jQuery.parseJSON(response);
-						// var responseData = JSON.parse(response);
-						if (!shown) {
+						if (!shown && response.Heading != "") {
+							formatResponse(response);
 							$('#results').show();
 							$('#results').animate({
 								height: "360px",
@@ -46,17 +44,28 @@
 							}, 'slow');
 							shown = true;
 						}
-						else {
+						else if (response.Heading != "") {
 							$('#actualResults').fadeOut('fast');
-							$('#actualResults').html('<h1>' + responseData.Heading + '</h1><br/>' + responseData.Abstract);
-							$('#actualResults').fadeIn('slow');
+							$(':animated').promise().done(function() {
+								formatResponse(response);
+								$('#actualResults').fadeIn('slow');
+							});
 						}
 					}
 				});
 
-				e.preventDefault();
+				return false
 			}
 		});
+
+		function formatResponse(response) {
+			if (response.Image != "") {
+				$('#actualResults').html('<img src="' + response.Image + '" style="float: left; padding-right: 20px; padding-top: 0;"><h1>' + response.Heading + '</h1><br/>' + response.Abstract + '<br/>');
+			}
+			else {
+				$('#actualResults').html('<h1>' + response.Heading + '</h1><br/>' + response.Abstract + '<br/>');
+			}
+		}
 	</script>
 </body>
 </html>
