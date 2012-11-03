@@ -36,9 +36,16 @@
 				$.ajax({
 					type:'GET',
 					url:'http://api.duckduckgo.com/',
-					data: "q=" + $('#search')[0].value + "&format=json&pretty=1",
+					dataType: 'script',
+					data: {
+						q: $('#search')[0].value,
+						o: "json",
+						format: "json",
+						pretty: "1"
+					},
 					success: function(response) {
-						$('#results').html('<h1>response["Heading"]</h1><br/>response["Abstract"]');
+						var responseData = jQuery.parseJSON(jQuery.trim(response));
+						$('#results').html('<h1>' + responseData["Heading"] + '</h1><br/>' + responseData["Abstract"]);
 					}
 				})
 
