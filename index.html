@@ -5,6 +5,9 @@
 	<link rel="stylesheet" type="text/css" href="search.css" />
 	<link href='http://fonts.googleapis.com/css?family=Share+Tech' rel='stylesheet' type='text/css'>
 	<title>Search</title>
+
+	<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+
 </head>
 <body background="bg2.png">
 	<form id="searchbox">
@@ -12,12 +15,38 @@
 		<!-- <input id="submit" type="submit" value="Search"> -->
 	</form>
 
+	<div id="results" style="display: none;">
+		
+	</div>
 
-	<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
 	<script type="text/javascript">
+		var shown = false;
+
 		$('.noEnterSubmit').keypress(function(e){
-			if ( e.which == 13 ) e.preventDefault();
+			if ( e.which == 13 ) {
+				if (!shown) {
+					$('#results').show()
+					$('#results').animate({
+						height: "360px",
+						padding: "20px 20px",
+					}, 2000);
+					shown = true;
+				}
+
+				$.ajax({
+					type:'GET',
+					url:'http://api.duckduckgo.com/',
+					data: "q=" + $('#search')[0].value + "&format=json&pretty=1",
+					success: function(response) {
+						$('#results').html('<h1>response["Heading"]</h1><br/>response["Abstract"]');
+					}
+				})
+
+				e.preventDefault();
+			}
 		});
+
+		// http://api.duckduckgo.com/?q=simpsons+characters&format=json&pretty=1
 	</script>
 </body>
 </html>
