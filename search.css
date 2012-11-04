@@ -70,4 +70,5 @@ input#search:focus {
 	/*padding: 20px 20px;*/
 	padding: 0px 0px;
 	box-shadow: 0 0 20px 8px rgba(0, 0, 0, 0.75) inset;
+	overflow: overflow-y;
 }
