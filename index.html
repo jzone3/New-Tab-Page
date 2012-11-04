@@ -73,7 +73,7 @@
 			}
 			else if (response.Answer != "") {
 				// example result: 4 * 2 = 8
-				$('#actualResults').html('<h1>' + response.Answer + '</h1>');
+				$('#actualResults').html('<h1 id="responseAnswer">' + response.Answer + '</h1>');
 			}
 			else if (response.RelatedTopics.length != 0) {
 				// disambiguation
@@ -107,6 +107,8 @@
 						$('#actualResults').append('<div id="subcategory' + i + '" style="display: none; padding-left: 10px;"><br/>' + subcategories + '</div><hr>');
 					}
 				}
+				$('#actualResults').append('<br/><br/><br/><a href="http://duckduckgo.com" style="color: black;">Results retrieved from Duck Duck Go</div></a>');
+				return false;
 			}
 			else if (response.Results.length != 0) {
 				// example query: lorem ipsum
@@ -118,6 +120,8 @@
 				window.location = 'http://duckduckgo.com/?q=' + $('#search')[0].value;
 				// window.location = response.Redirect('http://google.com/?q=' + $('#search')[0].value);
 			}
+			
+			$('#actualResults').append('<br/><br/><br/><a href="http://duckduckgo.com" style="color: black; position: absolute; top: 612px;">Results retrieved from Duck Duck Go</div></a>');
 		}
 	</script>
 </body>
