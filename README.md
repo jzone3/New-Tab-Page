@@ -1,7 +1,7 @@
 New-Tab-Page
 ===============
 
-A pretty, minimalist, and useful new tab page
+A pretty, minimalist, fast, and useful new tab page
 
 
 Feel free to contribute (maybe add some more search engines such as [insert your favorite language] documentation)!
