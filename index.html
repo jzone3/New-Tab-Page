@@ -6,7 +6,7 @@
 
 	<title>Search</title>
 
-	<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+	<script src="jquery-1.8.2.min.js"></script>
 
 </head>
 <body background="bg2.png">
@@ -19,10 +19,14 @@
 		<div id="actualResults"></div>
 	</div>
 
+<<<<<<< HEAD
 	<a href="http://jzone3.github.com/New-Tab-Page/"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_white_ffffff.png" alt="Fork me on GitHub"></a>
 
+=======
+>>>>>>> master
 	<script type="text/javascript">
 		var shown = false;
+		var global_response = false;
 
 		$('.noEnterSubmit').keypress(function(e){
 			if ( e.which == 13 ) {
@@ -34,10 +38,12 @@
 					data: {
 						q: $('#search')[0].value,
 						// o: "json",
-						format: 'json'
+						format: 'json',
+						no_redirect: 1
 					},
 					success: function(response) {
-						if (!shown && emptyResponse(response)) {
+						global_response = response;
+						if (!shown) {
 							formatResponse(response);
 							$('#results').show();
 							$('#results').animate({
@@ -46,7 +52,7 @@
 							}, 'slow');
 							shown = true;
 						}
-						else if (emptyResponse(response)) {
+						else {
 							$('#actualResults').fadeOut('fast');
 							$(':animated').promise().done(function() {
 								formatResponse(response);
@@ -60,32 +66,42 @@
 			}
 		});
 
-		function emptyResponse(response) {
-			$.each(response, function() {
-				$.each(this, function(k, v) {
-					if (v != "") {
-						return false;
-					}
-				});
-			});
-			return true;
+		function updateSearch(id) {
+			$('#search')[0].value = global_response.RelatedTopics[id].Text;
+			alert(global_response.RelatedTopics[id].Text);
 		}
 
 		function formatResponse(response) {
-			if (response.Image != "") {
-				$('#actualResults').html('<img src="' + response.Image + '" style="float: left; padding-right: 20px; padding-top: 0;"><h1>' + response.Heading + '</h1><br/>' + response.Abstract + '<br/>');
+			if (response.Type == "E" && response.Redirect != "") {
+				window.location = response.Redirect;
+				$.delay(4000);
+			}
+			else if (response.Image != "") {
+				$('#actualResults').html('<a href="' + response.AbstractURL + '" style="text-decoration: none; color: black;"><img src="' + response.Image + '" style="float: left; padding-right: 20px; padding-top: 0;"><h1>' + response.Heading + '</h1><br/>' + response.Abstract + '</a><br/>');
 			}
 			else if (response.Abstract != "") {
-				$('#actualResults').html('<h1>' + response.Heading + '</h1><br/>' + response.Abstract + '<br/>');
+				$('#actualResults').html('<a href="' + response.AbstractURL + '" style="text-decoration: none; color: black;"><h1>' + response.Heading + '</h1><br/>' + response.Abstract + '</a><br/>');
 			}
 			else if (response.Answer != "") {
 				$('#actualResults').html('<h1>' + response.Answer + '</h1>');
 			}
+			else if (response.RelatedTopics.length != 0) {
+				$('#actualResults').html("");
+				for (var i = 0; i < response.RelatedTopics.length; i++) {
+					if (String(response.RelatedTopics[i].Text) != "undefined") {
+						if (i != response.RelatedTopics.length - 1) {$('#actualResults').append('<a href="' + response.RelatedTopics[i].FirstURL + '" style="text-decoration: none; color: black;"><img src="' + response.RelatedTopics[i].Icon.URL + '" style="padding-right: 10px; float: left;">' + response.RelatedTopics[i].Text + '</a><br style="clear: both;"/><hr>');}
+						else {$('#actualResults').append(response.RelatedTopics[i].Text);}
+					} else {
+						if (i != response.RelatedTopics.length - 1) {$('#actualResults').append(response.RelatedTopics[i].Name + '<br/><hr>');}
+						else {$('#actualResults').append(response.RelatedTopics[i].Text);}
+					}
+				}
+			}
+			else if (response.Results != []) {
+				$('#actualResults').html(response.Results[0].Result);
+			}
 			else {
-				$('#actualResults').append("<ul>");
-				$('#actualResults').append(response.RelatedTopics.forEach(disambiguation));
-				alert($('#actualResults')[0].value);
-				$('#actualResults').append("</ul>");
+				$('#actualResults').html('<h1>No results found!</h1>');
 			}
 		}
 
