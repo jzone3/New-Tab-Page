@@ -61,11 +61,6 @@
 			}
 		});
 
-		function updateSearch(id) {
-			$('#search')[0].value = global_response.RelatedTopics[id].Text;
-			alert(global_response.RelatedTopics[id].Text);
-		}
-
 		function formatResponse(response) {
 			if (response.Type == "E" && response.Redirect != "") {
 				window.location = response.Redirect;
@@ -82,26 +77,40 @@
 			}
 			else if (response.RelatedTopics.length != 0) {
 				$('#actualResults').html("");
-				for (var i = 0; i < response.RelatedTopics.length; i++) {
+				for (var i in response.RelatedTopics) {
 					if (String(response.RelatedTopics[i].Text) != "undefined") {
 						if (i != response.RelatedTopics.length - 1) {$('#actualResults').append('<a href="' + response.RelatedTopics[i].FirstURL + '" style="text-decoration: none; color: black;"><img src="' + response.RelatedTopics[i].Icon.URL + '" style="padding-right: 10px; float: left;">' + response.RelatedTopics[i].Text + '</a><br style="clear: both;"/><hr>');}
 						else {$('#actualResults').append(response.RelatedTopics[i].Text);}
 					} else {
-						if (i != response.RelatedTopics.length - 1) {$('#actualResults').append(response.RelatedTopics[i].Name + '<br/><hr>');}
-						else {$('#actualResults').append(response.RelatedTopics[i].Text);}
+						if (i != response.RelatedTopics.length - 1) {
+							$('#actualResults').append('<a href="#" style="text-decoration: none; color: black;" onClick="$(' + "'#subcategory" + i + "'" + ').toggle(' + "'slow'" + ');">' + response.RelatedTopics[i].Name + ' (' + response.RelatedTopics[i].Topics.length + ')</a><br/>');
+						}
+						else {
+							$('#actualResults').append('<a href="#" style="text-decoration: none; color: black;" onClick="$(' + "'#subcategory" + i + "'" + ').toggle(' + "'slow'" + ');">' + response.RelatedTopics[i].Name + ' (' + response.RelatedTopics[i].Topics.length + ')</a>');
+						}
+						var subcategories = "";
+						for (var j in response.RelatedTopics[i].Topics) {
+							if (response.RelatedTopics[i].Topics[j].Icon && response.RelatedTopics[i].Topics[j].Icon.URL != "") {
+								subcategories = subcategories + '<a href="' + response.RelatedTopics[i].Topics[j].FirstURL + '" style="text-decoration: none; color: black;"><img src="' + response.RelatedTopics[i].Topics[j].Icon.URL + '" style="padding-right: 20px; float: left;">' + response.RelatedTopics[i].Topics[j].Text + '</a><br style="clear: both;"/>';
+							} else {
+								subcategories = subcategories + '<a href="' + response.RelatedTopics[i].Topics[j].FirstURL + '" style="text-decoration: none; color: black;">' + response.RelatedTopics[i].Topics[j].Text + '</a><br/>';
+							}
+							if (j != response.RelatedTopics[i].Topics.length - 1) {
+								subcategories = subcategories + '<hr>';
+							}
+						}
+						$('#actualResults').append('<div id="subcategory' + i + '" style="display: none; padding-left: 10px;"><br/>' + subcategories + '</div><hr>');
 					}
 				}
 			}
-			else if (response.Results != []) {
+			else if (response.Results.length != 0) {
 				$('#actualResults').html(response.Results[0].Result);
 			}
 			else {
 				$('#actualResults').html('<h1>No results found!</h1>');
+				window.location = 'http://duckduckgo.com/?q=' + $('#search')[0].value;
+				// window.location = response.Redirect('http://google.com/?q=' + $('#search')[0].value);
 			}
-		}
-
-		function disambiguation(element) {
-			return '<li>' + element.Text + '</li>';
 		}
 	</script>
 </body>
