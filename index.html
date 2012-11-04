@@ -38,12 +38,17 @@
 					},
 					success: function(response) {
 						if (!shown) {
-							formatResponse(response);
+							var returnVal = formatResponse(response);
 							$('#results').show();
 							$('#results').animate({
 								height: "360px",
 								padding: "20px 20px",
 							}, 'slow');
+							if (returnVal) {
+								$(':animated').promise().done(function() {
+									$('#actualResults').append('<br/><br/><br/><a href="http://duckduckgo.com" style="color: black; position: absolute; top: 612px;">Results retrieved from Duck Duck Go</div></a>');
+								});
+							}
 							shown = true;
 						}
 						else {
@@ -124,7 +129,10 @@
 				// window.location = response.Redirect('http://google.com/?q=' + $('#search')[0].value);
 			}
 			
-			$('#actualResults').append('<br/><br/><br/><a href="http://duckduckgo.com" style="color: black; position: absolute; top: 612px;">Results retrieved from Duck Duck Go</div></a>');
+			if (shown) {
+				$('#actualResults').append('<br/><br/><br/><a href="http://duckduckgo.com" style="color: black; position: absolute; top: 612px;">Results retrieved from Duck Duck Go</div></a>');
+			}
+			return true;
 		}
 	</script>
 </body>
