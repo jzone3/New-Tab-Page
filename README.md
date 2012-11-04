@@ -10,7 +10,6 @@ Feel free to contribute (maybe add some more search engines such as [insert your
 View a demo here: http://jzone3.github.com/Search-Template/
 
 
-License
-=======
+### License
 
 WTFPL http://en.wikipedia.org/wiki/WTFPL
