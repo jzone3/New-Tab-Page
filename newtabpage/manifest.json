@@ -1,0 +1,14 @@
+{
+  "name": "New Tab Search Page",
+  "version": "1.1",
+  "description": "changes the new tab page to a search page",
+  "chrome_url_overrides" : {
+    "newtab": "newTab.html"
+  },
+  "content_security_policy": "script-src 'self' https://api.duckduckgo.com; object-src 'self'",
+  "permissions": [
+    "chrome://favicon/",
+    "https://api.duckduckgo.com/"
+  ],
+  "manifest_version": 2
+}
